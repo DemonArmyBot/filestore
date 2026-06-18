@@ -5,8 +5,8 @@ import os
 LOG_FILE_NAME = "bot.log"
 PORT = int(os.environ.get("PORT", "8091"))
 URL = os.environ.get("URL", "")
-OWNER_ID = int(os.environ.get("OWNER_ID", "0"))  # Replace with your owner ID
-MSG_EFFECT = int(os.environ.get("MSG_EFFECT", "0"))  # Replace with your message effect ID
+OWNER_ID = int(os.environ.get("OWNER_ID", "7917224706"))  # Replace with your owner ID
+MSG_EFFECT = int(os.environ.get("MSG_EFFECT", "5046509860389126442"))  # Replace with your message effect ID
 
 DEFAULT_MESSAGES = {
     "START": "<b><blockquote>𝖧𝖾𝗒 {mention}!</blockquote></b>\n\n𝖨 𝖺𝗆 𝖺 𝖿𝗂𝗅𝖾 𝗌𝗍𝗈𝗋𝖾 𝖻𝗈𝗍.\n𝖨 𝖼𝖺𝗇 𝗉𝗋𝗈𝗏𝗂𝖽𝖾 𝗉𝗋𝗂𝗏𝖺𝗍𝖾 𝖿𝗂𝗅𝖾𝗌 𝗍𝗁𝗋𝗈𝗎𝗀𝗁 𝖺 𝗌𝗉𝖾𝖼𝗂𝖿𝗂𝖼 𝗅𝗂𝗇𝗄.\n\n<b><blockquote>➤ 𝖯𝗈𝗐𝖾𝗋𝖾𝚍 𝖻𝗒 @Team_Weilai</blockquote></b>",
@@ -23,7 +23,7 @@ DEFAULT_MESSAGES = {
 
 BOTS = [
     {
-        "session": os.environ.get("SESSION", ""),  # Set your session name
+        "session": os.environ.get("SESSION", "Demon"),  # Set your session name
         "token": os.environ.get("BOT_TOKEN", ""),  # Set your bot token
         "api_id": int(os.environ.get("API_ID", "0")),  # Set your API ID
         "api_hash": os.environ.get("API_HASH", ""),  # Set your API hash
