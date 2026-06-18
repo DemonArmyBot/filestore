@@ -60,8 +60,8 @@ class Bot(Client):
         self.autobatch_template = ""
         self.hide_caption = False
         self.channel_button_enabled = False
-        self.button_name = "Join Updates"
-        self.button_url = "https://t.me/realm_bots"
+        self.button_name = "✨ Join Updates 🚬"
+        self.button_url = "https://t.me/DemonArmy"
         self.robot_check = False
         self.is_support = True
         self.channel_link_expiry = 0
