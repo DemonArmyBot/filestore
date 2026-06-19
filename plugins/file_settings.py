@@ -35,9 +35,13 @@ async def file_settings_panel(client: Client, query: CallbackQuery):
     caption_btn_text = f"✦ 𝖧𝗂𝖽𝖾 𝖢𝖺𝗉𝗍𝗂𝗈𝗇: {'✔' if not hide_caption_enabled else '✘'}"
     button_btn_text = f"✦ 𝖢𝗁𝖺𝗇𝗇𝖾𝗅 𝖡𝗎𝗍𝗍𝗈𝗇: {'✔' if not button_enabled else '✘'}"
 
+    qr_status = "𝖮𝖭" if client.qr_enabled else "𝖮𝖥𝖥"
+    qr_btn_text = f"✦ 𝖰𝖱 𝖢𝗈𝖽𝖾: {qr_status}"
+    
     reply_markup = InlineKeyboardMarkup([
         [InlineKeyboardButton(protect_btn_text, callback_data="toggle_protect"), InlineKeyboardButton(caption_btn_text, callback_data="toggle_hide_caption")],
         [InlineKeyboardButton(button_btn_text, callback_data="toggle_channel_button"), InlineKeyboardButton("✦ 𝖲𝖾𝗍 𝖡𝗎𝗍𝗍𝗈𝗇 ➪", callback_data="set_button")],
+        [InlineKeyboardButton(qr_btn_text, callback_data="toggle_qr")],
         [InlineKeyboardButton("✦ 𝖡𝖺𝖼𝗄", callback_data="settings_pg2"), InlineKeyboardButton("✦ 𝖢𝗅𝗈𝗌𝖾 ✘", callback_data="close")]
     ])
     await send_settings_panel(client, query, caption, reply_markup)
@@ -98,4 +102,12 @@ async def set_button_details(client: Client, query: CallbackQuery):
             await res.reply("❌ 𝖨𝗇𝗏𝖺𝗅𝗂𝖽 𝖿𝗈𝗋𝗆𝖺𝗍. 𝖯𝗅𝖾𝖺𝗌𝖾 𝗎𝗌𝖾 `𝖭𝖺𝗆𝖾 | 𝖴𝗋𝗅`.")
     except ListenerTimeout:
         await prompt.edit("<b>𝖳𝗂𝗆𝖾𝗈𝗎𝗍! 𝖭𝗈 𝖼𝗁𝖺𝗇𝗀𝖾𝗌 𝗐𝖾𝗋𝖾 𝗆𝖺𝖽𝖾.</b>")
+    await file_settings_panel(client, query)
+@Client.on_callback_query(filters.regex("^toggle_qr$"))
+async def toggle_qr(client: Client, query: CallbackQuery):
+    if query.from_user.id not in client.admins:
+        return await query.answer("𝖠𝖽𝗆𝗂𝗇 𝗈𝗇𝗅𝗒!", show_alert=True)
+    client.qr_enabled = not client.qr_enabled
+    await client.mongodb.save_bot_setting('qr_enabled', client.qr_enabled)
+    await query.answer(f"𝖰𝖱 𝖢𝗈𝖽𝖾 𝗇𝗈𝗐 {'𝖤𝗇𝖺𝖻𝗅𝖾𝖽' if client.qr_enabled else '𝖣𝗂𝗌𝖺𝖻𝗅𝖾𝖽'}")
     await file_settings_panel(client, query)

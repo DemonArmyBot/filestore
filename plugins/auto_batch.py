@@ -4,7 +4,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.enums import ParseMode
 from pyrogram.errors.pyromod import ListenerTimeout
-from helper.helper_func import encode, get_message_id, get_messages, get_redirect_link, weilai_style
+from helper.helper_func import encode, get_message_id, get_messages, get_redirect_link, weilai_style, generate_qr
 
 QUALITY_PATTERNS = {
     "4k": re.compile(r'2160p|4k', re.IGNORECASE),
@@ -240,6 +240,14 @@ async def auto_batch_range_command(client: Client, message: Message):
                     disable_web_page_preview=True,
                     parse_mode=ParseMode.HTML
                 )
+                if client.qr_enabled:
+                    qr_image = await generate_qr(sharing_link)
+                    await client.send_photo(
+                        chat_id=message.from_user.id,
+                        photo=qr_image,
+                        caption=f"<b>🔗 𝖲𝗁𝖺𝗋𝗂𝗇𝗀 𝖫𝗂𝗇𝗄 𝖰𝖱:</b>\n<code>{sharing_link}</code>",
+                        parse_mode=ParseMode.HTML
+                    )
 
                 if getattr(client, 'redirector_log', None):
                     try:

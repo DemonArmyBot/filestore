@@ -3,7 +3,7 @@ from pyrogram import filters, Client
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.enums import ParseMode
 from pyrogram.errors import FloodWait
-from helper.helper_func import encode, get_redirect_link
+from helper.helper_func import encode, get_redirect_link, generate_qr
 
 async def is_not_numeric_reply(_, __, message: Message):
     if message.text and message.text.isdigit():
@@ -49,6 +49,14 @@ async def channel_post(client: Client, message: Message):
         response_text,
         reply_markup=reply_markup,
         disable_web_page_preview=True,
+        parse_mode=ParseMode.HTML
+    )
+    if client.qr_enabled:
+    qr_image = await generate_qr(current_bot_link)
+    await client.send_photo(
+        chat_id=message.from_user.id,
+        photo=qr_image,
+        caption=f"<b>🔗 𝖲𝗁𝖺𝗋𝖾 𝖫𝗂𝗇𝗄 𝖰𝖱:</b>\n<code>{current_bot_link}</code>",
         parse_mode=ParseMode.HTML
     )
     backup_db_id = client.databases.get('backup')
