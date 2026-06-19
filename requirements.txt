@@ -9,3 +9,5 @@ asyncio
 TgCrypto
 requests
 requests-toolbelt
+qrcode[pil]
+Pillow

@@ -64,6 +64,7 @@ class Bot(Client):
         self.button_url = "https://t.me/DemonArmy"
         self.robot_check = False
         self.is_support = True
+        self.qr_enabled = False  # default
         self.channel_link_expiry = 0
     def get_current_settings(self):
         """Returns the dictionary for the legacy settings system."""
@@ -98,6 +99,7 @@ class Bot(Client):
         self.button_name = await self.mongodb.load_bot_setting('button_name', self.button_name)
         self.button_url = await self.mongodb.load_bot_setting('button_url', self.button_url)
         self.robot_check = await self.mongodb.load_bot_setting('robot_check', False)
+        self.qr_enabled = await self.mongodb.load_bot_setting('qr_enabled', False)
         self.channel_link_expiry = await self.mongodb.load_bot_setting('channel_link_expiry', 0)
         self.LOGGER(__name__, self.name).info("All modern settings loaded and validated.")
         saved_settings = await self.mongodb.load_settings(self.name)
