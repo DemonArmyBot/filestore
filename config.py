@@ -10,11 +10,9 @@ MSG_EFFECT = int(os.environ.get("MSG_EFFECT", "5046509860389126442"))  # Replace
 
 DEFAULT_MESSAGES = {
     "START": "<b><blockquote>𝖧𝖾𝗒 {mention}!</blockquote></b>\n\n(っ◔◡◔)っ 𝕴 𝖆𝖒 𝖆 𝖋𝖎𝖑𝖊 𝖘𝖙𝖔𝖗𝖊 𝖇𝖔𝖙.\n𝖨 ɪ ᴄᴀɴ ᴘʀᴏᴠɪᴅᴇ ᴘʀɪᴠᴀᴛᴇ ꜰɪʟᴇꜱ ᴛʜʀᴏᴜɢʜ ᴀ ꜱᴘᴇᴄɪꜰɪᴄ ʟɪɴᴋ.\n\n<b><blockquote>➤ 𝙿𝚘𝚠𝚎𝚛𝚎𝚍 𝚋𝚢 @DemonArmy</blockquote></b>",
-    "FSUB": "<b><blockquote>✗ 【Ａｃｃｅｓｓ　Ｄｅｎｉｅｄ！】</blockquote></b>\n\nʏᴏᴜ ᴍᴜꜱᴛ ᴊᴏɪɴ ᴏᴜʀ ᴏꜰꜰɪᴄɪᴀʟ ᴄʜᴀɴɴᴇʟꜱ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ʙᴏᴛ. ᴘʟᴇᴀꜱᴇ ᴊᴏɪɴ ᴛʜᴇ ᴄʜᴀɴɴᴇʟꜱ ʙᴇʟᴏᴡ
-.",
+    "FSUB": "<b><blockquote>✗ 【Ａｃｃｅｓｓ　Ｄｅｎｉｅｄ！】</blockquote></b>\n\nʏᴏᴜ ᴍᴜꜱᴛ ᴊᴏɪɴ ᴏᴜʀ ᴏꜰꜰɪᴄɪᴀʟ ᴄʜᴀɴɴᴇʟꜱ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ʙᴏᴛ. ᴘʟᴇᴀꜱᴇ ᴊᴏɪɴ ᴛʜᴇ ᴄʜᴀɴɴᴇʟꜱ ʙᴇʟᴏᴡ.",
     "ABOUT": "<b><blockquote>𝐀𝐛𝐨𝐮𝐭 𝐓𝐡𝐢𝐬 𝐁𝐨𝐭\n╭────[  𝚃𝚎𝚌𝚑𝚗𝚒𝚌𝚊𝚕 𝚂𝚝𝚊𝚌𝚔 ]────⍟\n➠ BӨƬ ПΛMΣ : {bot_name}\n\n➠ ᴅᴇᴠᴇʟᴏᴘᴇʀ : @DemonArmy\n➠ ʟɪʙʀᴀʀʏ : Demon Library\n➠ ʟᴀɴɢᴜᴀɢᴇ : ǝɓɐnɓuɐ˥ uoɯǝᗡ\n➠ ᴅᴀᴛᴀʙᴀꜱᴇ : Dҽɱσɳ LιႦɾαɾყ\n➠ ᴠᴇʀꜱɪᴏɴ :  666 [ 𝖫𝖺𝗍𝖾𝗌𝗍 ]\n➠ ʜᴏꜱᴛɪɴɢ : plɹoM uoɯǝᗡ pǝʇɐɔıpǝᗡ\n╰───────────────⍟</blockquote></b>",
-    "REPLY": "✓ ɪ ᴀᴍ ᴅᴇᴅɪᴄᴀᴛᴇᴅ ᴛᴏ ᴍʏ ᴍᴀꜱᴛᴇʀ, ᴀɴᴅ ʏᴏᴜ ᴀʀᴇɴ'ᴛ ᴡᴏʀᴛʜʏ ,ᴍᴏʀᴛᴀʟ!
-.",
+    "REPLY": "✓ ɪ ᴀᴍ ᴅᴇᴅɪᴄᴀᴛᴇᴅ ᴛᴏ ᴍʏ ᴍᴀꜱᴛᴇʀ, ᴀɴᴅ ʏᴏᴜ ᴀʀᴇɴ'ᴛ ᴡᴏʀᴛʜʏ ,ᴍᴏʀᴛᴀʟ!.",
     "START_PHOTO": "https://files.catbox.moe/xs6tvt.jpg",
     "ABOUT_PHOTO": "https://files.catbox.moe/myu6vn.jpg",
     "FSUB_PHOTO": "https://files.catbox.moe/d8l452.jpg",
