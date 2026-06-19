@@ -9,16 +9,18 @@ OWNER_ID = int(os.environ.get("OWNER_ID", "7917224706"))  # Replace with your ow
 MSG_EFFECT = int(os.environ.get("MSG_EFFECT", "5046509860389126442"))  # Replace with your message effect ID
 
 DEFAULT_MESSAGES = {
-    "START": "<b><blockquote>𝖧𝖾𝗒 {mention}!</blockquote></b>\n\n𝖨 𝖺𝗆 𝖺 𝖿𝗂𝗅𝖾 𝗌𝗍𝗈𝗋𝖾 𝖻𝗈𝗍.\n𝖨 𝖼𝖺𝗇 𝗉𝗋𝗈𝗏𝗂𝖽𝖾 𝗉𝗋𝗂𝗏𝖺𝗍𝖾 𝖿𝗂𝗅𝖾𝗌 𝗍𝗁𝗋𝗈𝗎𝗀𝗁 𝖺 𝗌𝗉𝖾𝖼𝗂𝖿𝗂𝖼 𝗅𝗂𝗇𝗄.\n\n<b><blockquote>➤ 𝖯𝗈𝗐𝖾𝗋𝖾𝚍 𝖻𝗒 @Team_Weilai</blockquote></b>",
-    "FSUB": "<b><blockquote>✗ 𝖠𝖼𝖼𝖾𝗌𝗌 𝖣𝖾𝗇𝗂𝖾𝖽!</blockquote></b>\n\n𝖸𝗈𝗎 𝗆𝗎𝗌𝗍 𝗃𝗈𝗂𝗇 𝗈𝗎𝗋 𝗈𝖿𝖿𝗂𝖼𝗂𝖺𝗅 𝖼𝗁𝖺𝗇𝗇𝖾𝗅𝗌 𝗍𝗈 𝗎𝗌𝖾 𝗍𝗁𝗂𝗌 𝖻𝗈𝗍. 𝖯𝗅𝖾𝖺𝗌𝖾 𝗃𝗈𝗂𝗇 𝗍𝗁𝖾 𝖼𝗁𝖺𝗇𝗇𝖾𝗅𝗌 𝖻𝖾𝗅𝗈𝗐.",
-    "ABOUT": "<b><blockquote>𝖠𝖻𝗈𝗎𝗍 𝖳𝗁𝗂𝗌 𝖡𝗈𝗍\n╭────[  𝖳𝖾𝖼𝗁𝗇𝗂𝖼𝖺𝗅 𝖲𝗍𝖺𝖼𝗄 ]────⍟\n➠ 𝖡𝗈𝗍 𝖭𝖺𝗆𝖾 : {bot_name}\n➠ 𝖣𝖾𝗏𝖾𝗅𝗈𝗉𝖾𝗋 : 𝖳𝖾𝖺𝗆 𝖶𝖾𝗂𝗅𝖺𝗂\n➠ 𝖫𝗂𝖻𝗋𝖺𝗋𝗒 : 𝖯𝗒𝗋𝗈𝗀𝗋𝖺𝗆 𝖠𝗌𝗒𝗇𝖼\n➠ 𝖫𝖺𝗇𝗀𝗎𝖺𝗀𝖾 : 𝖯𝗒𝗍𝗁𝗈𝗇 𝟥.𝟣𝟣+\n➠ 𝖣𝖺𝗍𝖺𝖻𝖺𝗌𝖾 : 𝖬𝗈𝗇𝗀𝗈𝖣𝖡 𝖠𝗍𝗅𝖺𝗌 𝖢𝗅𝗎𝗌𝗍𝖾𝗋\n➠ 𝖵𝖾𝗋𝗌𝗂𝗈𝗇 : 𝖹𝖾𝗍𝗂𝖺𝗇 𝟤.𝟨.𝟥 [ 𝖫𝖺𝗍𝖾𝗌𝗍 ]\n➠ 𝖧𝗈𝗌𝗍𝗂𝗇𝗀 : 𝖣𝖾𝖽𝗂𝖼𝖺𝗍𝖾𝖽 𝖧𝗂𝗀𝗁-𝖲𝗉𝖾𝖾𝖽 𝖵𝖯𝖲\n╰───────────────⍟</blockquote></b>",
-    "REPLY": "✓ 𝖨 𝖺𝗆 𝖽𝖾𝖽𝗂𝖼𝖺𝗍𝖾𝖽 𝗍𝗈 𝗆𝗒 𝗆𝖺𝗌𝗍𝖾𝗋. 𝖣𝗈𝗇'𝗍 𝖺𝖻𝗎𝗌𝖾 𝗆𝖾.",
-    "START_PHOTO": "https://graph.org/file/00daf970f7c8b9282cc5c-7d62ceac5da0423a44.jpg",
-    "ABOUT_PHOTO": "https://graph.org/file/00daf970f7c8b9282cc5c-7d62ceac5da0423a44.jpg",
-    "FSUB_PHOTO": "https://graph.org/file/00daf970f7c8b9282cc5c-7d62ceac5da0423a44.jpg",
-    "SETTINGS_PHOTO": "https://graph.org/file/00daf970f7c8b9282cc5c-7d62ceac5da0423a44.jpg",
-    "AUTO_DEL_TEXT": "<b>⚠️ 𝖣𝗎𝖾 𝖳𝗈 𝖢𝗈𝗉𝗒𝗋𝗂𝗀𝗁𝗍 𝖨𝗌𝗌𝗎𝖾𝗌....\n<blockquote>𝖸𝗈𝗎𝗋 𝖥𝗂𝗅𝖾𝗌 𝖶𝗂𝗅𝗅 𝖡𝖾 𝖣𝖾𝗅𝖾𝗍𝖾𝖽 𝖶𝗂𝗍𝗁𝗂𝗇 {time}. 𝖲𝗈 𝖯𝗅𝖾𝖺𝗌𝖾 𝖥𝗈𝗋𝗐𝖺𝗋𝖽 𝖳𝗁𝖾𝗆 𝖳𝗈 𝖠𝗇𝗒 𝖮𝗍𝗁𝖾𝗋 𝖯𝗅𝖺𝖼𝖾 𝖥𝗈𝗋 𝖥𝗎𝗍𝗎𝗋𝖾 𝖠𝗏𝖺𝗂𝗅𝖺𝖻𝗂𝗅𝗂𝗍𝗒.</blockquote>\n<blockquote>𝖭𝗈𝗍𝖾 : 𝖴𝗌𝖾 𝖵𝗅𝖼 𝖮𝗋 𝖠𝗇𝗒 𝖮𝗍𝗁𝖾𝗋 𝖦𝗈𝗈𝖽 𝖵𝗂𝖽𝖾𝗈 𝖯𝗅𝖺𝗒𝖾𝗋 𝖠𝗉𝗉 𝖳𝗈 𝖶𝖺𝗍𝖼𝗁 𝖳𝗁𝖾 𝖤𝗉𝗂𝗌𝗈𝖽𝖾𝗌 𝖶𝗂𝗍𝗁 𝖦𝗈𝗈𝖽 𝖤𝗑𝗉𝖾𝗋𝗂𝖾𝗇𝖼𝖾!</blockquote></b>",
-    "AUTO_DEL_PHOTO": ""
+    "START": "<b><blockquote>𝖧𝖾𝗒 {mention}!</blockquote></b>\n\n(っ◔◡◔)っ 𝕴 𝖆𝖒 𝖆 𝖋𝖎𝖑𝖊 𝖘𝖙𝖔𝖗𝖊 𝖇𝖔𝖙.\n𝖨 ɪ ᴄᴀɴ ᴘʀᴏᴠɪᴅᴇ ᴘʀɪᴠᴀᴛᴇ ꜰɪʟᴇꜱ ᴛʜʀᴏᴜɢʜ ᴀ ꜱᴘᴇᴄɪꜰɪᴄ ʟɪɴᴋ.\n\n<b><blockquote>➤ 𝙿𝚘𝚠𝚎𝚛𝚎𝚍 𝚋𝚢 @DemonArmy</blockquote></b>",
+    "FSUB": "<b><blockquote>✗ 【Ａｃｃｅｓｓ　Ｄｅｎｉｅｄ！】</blockquote></b>\n\nʏᴏᴜ ᴍᴜꜱᴛ ᴊᴏɪɴ ᴏᴜʀ ᴏꜰꜰɪᴄɪᴀʟ ᴄʜᴀɴɴᴇʟꜱ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ʙᴏᴛ. ᴘʟᴇᴀꜱᴇ ᴊᴏɪɴ ᴛʜᴇ ᴄʜᴀɴɴᴇʟꜱ ʙᴇʟᴏᴡ
+.",
+    "ABOUT": "<b><blockquote>𝐀𝐛𝐨𝐮𝐭 𝐓𝐡𝐢𝐬 𝐁𝐨𝐭\n╭────[  𝚃𝚎𝚌𝚑𝚗𝚒𝚌𝚊𝚕 𝚂𝚝𝚊𝚌𝚔 ]────⍟\n➠ BӨƬ ПΛMΣ : {bot_name}\n\n➠ ᴅᴇᴠᴇʟᴏᴘᴇʀ : @DemonArmy\n➠ ʟɪʙʀᴀʀʏ : Demon Library\n➠ ʟᴀɴɢᴜᴀɢᴇ : ǝɓɐnɓuɐ˥ uoɯǝᗡ\n➠ ᴅᴀᴛᴀʙᴀꜱᴇ : Dҽɱσɳ LιႦɾαɾყ\n➠ ᴠᴇʀꜱɪᴏɴ :  666 [ 𝖫𝖺𝗍𝖾𝗌𝗍 ]\n➠ ʜᴏꜱᴛɪɴɢ : plɹoM uoɯǝᗡ pǝʇɐɔıpǝᗡ\n╰───────────────⍟</blockquote></b>",
+    "REPLY": "✓ ɪ ᴀᴍ ᴅᴇᴅɪᴄᴀᴛᴇᴅ ᴛᴏ ᴍʏ ᴍᴀꜱᴛᴇʀ, ᴀɴᴅ ʏᴏᴜ ᴀʀᴇɴ'ᴛ ᴡᴏʀᴛʜʏ ,ᴍᴏʀᴛᴀʟ!
+.",
+    "START_PHOTO": "https://files.catbox.moe/xs6tvt.jpg",
+    "ABOUT_PHOTO": "https://files.catbox.moe/myu6vn.jpg",
+    "FSUB_PHOTO": "https://files.catbox.moe/d8l452.jpg",
+    "SETTINGS_PHOTO": "https://files.catbox.moe/z9iavz.jpg",
+    "AUTO_DEL_TEXT": "<b>⚠️ 𝙳𝚄𝙴 𝚃𝙾 𝙲𝙾𝙿𝚈𝚁𝙸𝙶𝙷𝚃 𝙸𝚂𝚂𝚄𝙴𝚂.......\n\n<blockquote>ʏᴏᴜʀ ꜰɪʟᴇꜱ ᴡɪʟʟ ʙᴇ ᴅᴇʟᴇᴛᴇᴅ ᴡɪᴛʜɪɴ {time}. 𝚂𝚘 𝙿𝚕𝚎𝚊𝚜𝚎 𝙵𝚘𝚛𝚠𝚊𝚛𝚍 𝚃𝚑𝚎𝚖 𝚃𝚘 𝙰𝚗𝚢 𝙾𝚝𝚑𝚎𝚛 𝙿𝚕𝚊𝚌𝚎 𝙵𝚘𝚛 𝙵𝚞𝚝𝚞𝚛𝚎 𝙰𝚟𝚊𝚒𝚕𝚊𝚋𝚒𝚕𝚒𝚝𝚢.</blockquote>\n\n<blockquote>ᑎOTE : ᴜꜱᴇ ᴠʟᴄ ᴏʀ ᴀɴʏ ᴏᴛʜᴇʀ ɢᴏᴏᴅ ᴠɪᴅᴇᴏ ᴘʟᴀʏᴇʀ ᴀᴘᴘ ᴛᴏ ᴡᴀᴛᴄʜ ᴛʜᴇ ᴠɪᴅᴇᴏꜱ ᴡɪᴛʜ ɢᴏᴏᴅ ᴇxᴘᴇʀɪᴇɴᴄᴇ!</blockquote></b>",
+    "AUTO_DEL_PHOTO": "https://files.catbox.moe/l1sdcr.jpg"
 }
 
 BOTS = [
