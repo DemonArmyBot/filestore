@@ -10,7 +10,24 @@ from pyrogram.enums import ChatMemberStatus, ParseMode
 from pyrogram.errors import UserNotParticipant, Forbidden, PeerIdInvalid, ChatAdminRequired, FloodWait
 from datetime import datetime, timedelta, timezone
 from pyrogram import errors
+import qrcode
+from io import BytesIO
 
+async def generate_qr(data: str) -> BytesIO:
+    """Generate a QR code image from a URL or text."""
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=6,
+        border=2,
+    )
+    qr.add_data(data)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="black", back_color="white")
+    bio = BytesIO()
+    img.save(bio, format="PNG")
+    bio.seek(0)
+    return bio
 async def get_redirect_link(client: Client, payload: str, is_verify: bool = False, use_redirector: bool = True, expiry_mins: int = 0):
     link_gen_bot = getattr(client, 'link_gen_bot', None)
     if use_redirector and link_gen_bot:
