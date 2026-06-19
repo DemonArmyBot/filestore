@@ -52,13 +52,13 @@ async def channel_post(client: Client, message: Message):
         parse_mode=ParseMode.HTML
     )
     if client.qr_enabled:
-    qr_image = await generate_qr(current_bot_link)
-    await client.send_photo(
-        chat_id=message.from_user.id,
-        photo=qr_image,
-        caption=f"<b>🔗 𝖲𝗁𝖺𝗋𝖾 𝖫𝗂𝗇𝗄 𝖰𝖱:</b>\n<code>{current_bot_link}</code>",
-        parse_mode=ParseMode.HTML
-    )
+        qr_image = await generate_qr(current_bot_link)
+        await client.send_photo(
+            chat_id=message.from_user.id,
+            photo=qr_image,
+            caption=f"<b>🪡 ꜱʜᴀʀᴇ ʟɪɴᴋ Qʀ:</b>\n<code>{current_bot_link}</code>",
+            parse_mode=ParseMode.HTML
+        )
     backup_db_id = client.databases.get('backup')
     if backup_db_id:
         try:
