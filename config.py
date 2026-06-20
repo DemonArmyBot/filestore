@@ -42,7 +42,7 @@ BOTS = [
         "auto_del": int(os.environ.get("AUTO_DEL", "600")),
         "messages": DEFAULT_MESSAGES,
         "admins": [],
-        "disable_btn": True,
+        "disable_btn": False,
         "protect": False
     }
 ]
