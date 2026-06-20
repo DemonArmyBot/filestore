@@ -1,4 +1,3 @@
-
 from pyrogram import Client
 from pyrogram.types import InlineKeyboardButton, BotCommand
 from pyrogram.enums import ParseMode
@@ -66,6 +65,7 @@ class Bot(Client):
         self.is_support = True
         self.qr_enabled = False  # default
         self.channel_link_expiry = 0
+
     def get_current_settings(self):
         """Returns the dictionary for the legacy settings system."""
         return {
@@ -101,6 +101,10 @@ class Bot(Client):
         self.robot_check = await self.mongodb.load_bot_setting('robot_check', False)
         self.qr_enabled = await self.mongodb.load_bot_setting('qr_enabled', False)
         self.channel_link_expiry = await self.mongodb.load_bot_setting('channel_link_expiry', 0)
+
+        # Load disable_btn from DB (overrides config if set)
+        self.disable_btn = await self.mongodb.load_bot_setting('disable_btn', self.disable_btn)
+
         self.LOGGER(__name__, self.name).info("All modern settings loaded and validated.")
         saved_settings = await self.mongodb.load_settings(self.name)
         if saved_settings:
@@ -119,6 +123,7 @@ class Bot(Client):
             self.auto_del = saved_settings.get("auto_del", self.auto_del)
             self.disable_btn = saved_settings.get("disable_btn", self.disable_btn)
             self.reply_text = saved_settings.get("reply_text", self.reply_text)
+
         self.fsub_dict = {}
         if self.fsub:
             for channel_id, needs_request, timer in self.fsub:
