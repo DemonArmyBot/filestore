@@ -1,4 +1,3 @@
-
 import base64
 import re
 import asyncio
@@ -28,6 +27,7 @@ async def generate_qr(data: str) -> BytesIO:
     img.save(bio, format="PNG")
     bio.seek(0)
     return bio
+
 async def get_redirect_link(client: Client, payload: str, is_verify: bool = False, use_redirector: bool = True, expiry_mins: int = 0):
     link_gen_bot = getattr(client, 'link_gen_bot', None)
     if use_redirector and link_gen_bot:
@@ -263,6 +263,9 @@ def force_sub(func):
             client.LOGGER(__name__, client.name).warning(f"Error updating FSUB message: {e}")
     return wrapper
 
+# ============================================================
+# MODIFIED delete_files – only "Close" button + optional different photo
+# ============================================================
 async def delete_files(messages, client, k, enter):
     if client.auto_del > 0:
         await asyncio.sleep(client.auto_del)
@@ -271,31 +274,27 @@ async def delete_files(messages, client, k, enter):
                 await msg.delete()
             except Exception as e:
                 client.LOGGER(__name__, client.name).warning(f"Failed to auto-delete message {msg.id}: {e}")
-    command_part = enter.split(" ")[1] if len(enter.split(" ")) > 1 else None
-    button_url = None
-    if command_part:
-        try:
-            button_url = f"https://t.me/{client.username}?start={command_part}"
-        except:
-            pass
 
+    # Only one button – Close
     final_text = "<b>𝖯𝗋𝖾𝗏𝗂𝗈𝗎𝗌 𝖬𝖾𝗌𝗌𝖺𝗀𝖾 𝖶𝖺𝗌 𝖣𝖾𝗅𝖾𝗍𝖾𝖽 🗑</b>"
-    keyboard = None
+    keyboard = InlineKeyboardMarkup(
+        [[InlineKeyboardButton("✦ 𝖢𝗅𝗈𝗌𝖾 ✖️", callback_data="close")]]
+    )
 
-    if button_url:
-        final_text += f'\n<blockquote><b>𝖨𝖿 𝖸𝗈𝗎 𝖶𝖺𝗇𝗍 𝖳𝗈 𝖦𝖾𝗍 𝖳𝗁𝖾 𝖥𝗂𝗅𝖾𝗌 𝖠𝗀𝖺𝗂𝗇, 𝖳𝗁𝖾𝗇 𝖢𝗅𝗂𝖼𝗄:[<a href="{button_url}">⭕️ 𝖢𝗅𝗂𝖼𝗄 𝖧𝖾𝗋𝖾</a>] 𝖡𝗎𝗍𝗍𝗈𝗇 𝖡𝖾𝗅𝗈𝗐 𝖤𝗅𝗌𝖾 𝖢𝗅𝗈𝗌𝖾 𝖳𝗁𝗂𝗌 𝖬𝖾𝗌𝗌𝖺𝗀𝖾.</blockquote></b>'
-        keyboard = InlineKeyboardMarkup(
-            [[InlineKeyboardButton("✦ 𝖢𝗅𝗂𝖼𝗄 𝖧𝖾𝗋𝖾", url=button_url), InlineKeyboardButton("✦ 𝖢𝗅𝗈𝗌𝖾 ✖️", callback_data="close")]]
-        )
+    # Use a dedicated image for the deleted state, if set
+    deleted_photo = client.messages.get('DELETED_PHOTO', '')
 
     try:
-        if k.photo:
-            await k.edit_caption(
-                caption=final_text,
-                reply_markup=keyboard,
-                parse_mode=ParseMode.HTML
-            )
+        if k.photo or deleted_photo:
+            from pyrogram.types import InputMediaPhoto
+            if deleted_photo:
+                media = InputMediaPhoto(media=deleted_photo, caption=final_text)
+            else:
+                # keep the existing photo but update caption
+                media = InputMediaPhoto(media=k.photo.file_id, caption=final_text)
+            await k.edit_media(media=media, reply_markup=keyboard)
         else:
+            # No photo – just edit text
             await k.edit_text(
                 final_text,
                 reply_markup=keyboard,
