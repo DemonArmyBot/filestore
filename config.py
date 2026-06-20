@@ -17,6 +17,7 @@ DEFAULT_MESSAGES = {
     "ABOUT_PHOTO": "https://files.catbox.moe/myu6vn.jpg",
     "FSUB_PHOTO": "https://files.catbox.moe/d8l452.jpg",
     "SETTINGS_PHOTO": "https://files.catbox.moe/z9iavz.jpg",
+    "DELETED_PHOTO": "https://files.catbox.moe/d8l452.jpg",  # or leave empty
     "AUTO_DEL_TEXT": "<b>⚠️ 𝙳𝚄𝙴 𝚃𝙾 𝙲𝙾𝙿𝚈𝚁𝙸𝙶𝙷𝚃 𝙸𝚂𝚂𝚄𝙴𝚂.......\n\n<blockquote>ʏᴏᴜʀ ꜰɪʟᴇꜱ ᴡɪʟʟ ʙᴇ ᴅᴇʟᴇᴛᴇᴅ ᴡɪᴛʜɪɴ {time}. 𝚂𝚘 𝙿𝚕𝚎𝚊𝚜𝚎 𝙵𝚘𝚛𝚠𝚊𝚛𝚍 𝚃𝚑𝚎𝚖 𝚃𝚘 𝙰𝚗𝚢 𝙾𝚝𝚑𝚎𝚛 𝙿𝚕𝚊𝚌𝚎 𝙵𝚘𝚛 𝙵𝚞𝚝𝚞𝚛𝚎 𝙰𝚟𝚊𝚒𝚕𝚊𝚋𝚒𝚕𝚒𝚝𝚢.</blockquote>\n\n<blockquote>ᑎOTE : ᴜꜱᴇ ᴠʟᴄ ᴏʀ ᴀɴʏ ᴏᴛʜᴇʀ ɢᴏᴏᴅ ᴠɪᴅᴇᴏ ᴘʟᴀʏᴇʀ ᴀᴘᴘ ᴛᴏ ᴡᴀᴛᴄʜ ᴛʜᴇ ᴠɪᴅᴇᴏꜱ ᴡɪᴛʜ ɢᴏᴏᴅ ᴇxᴘᴇʀɪᴇɴᴄᴇ!</blockquote></b>",
     "AUTO_DEL_PHOTO": "https://files.catbox.moe/l1sdcr.jpg"
 }
