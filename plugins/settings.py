@@ -58,7 +58,6 @@ async def send_settings_panel(client, query, caption, reply_markup):
 async def settings_cmd(client, message: Message):
     if message.from_user.id not in client.admins:
         return await message.reply(client.reply_text)
-    # Pass the message directly; settings_page_1 will handle it
     await settings_page_1(client, message)
 
 @Client.on_callback_query(filters.regex("^settings$"))
@@ -75,10 +74,8 @@ async def settings_page_1_cb(client, query: CallbackQuery):
 
 async def settings_page_1(client, obj):
     """Works with either a CallbackQuery or a Message."""
-    # If it's a callback, answer it
     if hasattr(obj, 'answer'):
         await obj.answer()
-    # The rest uses the object directly (both have .message or are the message itself)
     caption = """<blockquote><b>⚙️ 𝖡𝗈𝗍 𝖲𝖾𝗍𝗍𝗂𝗇𝗀𝗌 (𝖯𝖺𝗀𝖾 𝟣/𝟤)</b></blockquote>
 𝖴𝗌𝖾 𝖳𝗁𝖾 𝖡𝗎𝗍𝗍𝗈𝗇𝗌 𝖡𝖾𝗅𝗈𝗐 𝖳𝗈 𝖬𝖺𝗇𝖺𝗀𝖾 𝖳𝗁𝖾 𝖡𝗈𝗍'𝖲 𝖢𝗈𝗋𝖾 𝖥𝖾𝖺𝗍𝗎𝗋𝖾𝗌.
 """
@@ -114,6 +111,9 @@ async def settings_page_2_content(client, obj):
     reply_markup = InlineKeyboardMarkup(buttons)
     await send_settings_panel(client, obj, caption, reply_markup)
 
+# ============================================================
+# MODIFIED photos – added Deleted Pic button
+# ============================================================
 @Client.on_callback_query(filters.regex("^photos$"))
 async def photos(client, query):
     if query.from_user.id not in client.admins:
@@ -126,10 +126,12 @@ async def photos(client, query):
 <b>›› 𝖥𝗌𝗎𝖻 𝖯𝗂𝖼 :</b> <code>{'𝖠𝖽𝖽𝖾𝖽' if client.messages.get('FSUB_PHOTO') else '𝖭𝗈𝗍 𝖺𝖽𝖽𝖾𝖽'}</code>
 <b>›› 𝖠𝖻𝗈𝗎𝗍 𝖯𝗂𝖼 :</b> <code>{'𝖠𝖽𝖽𝖾𝖽' if client.messages.get('ABOUT_PHOTO') else '𝖭𝗈𝗍 𝖺𝖽𝖽𝖾𝖽'}</code>
 <b>›› 𝖲𝖾𝗍𝗍𝗂𝗇𝗀𝗌 𝖯𝗂𝖼 :</b> <code>{'𝖠𝖽𝖽𝖾𝖽' if client.messages.get('SETTINGS_PHOTO') else '𝖭𝗈𝗍 𝖺𝖽𝖽𝖾𝖽'}</code>
+<b>›› 𝖣𝖾𝗅𝖾𝗍𝖾𝖽 𝖯𝗂𝖼 :</b> <code>{'𝖠𝖽𝖽𝖾𝖽' if client.messages.get('DELETED_PHOTO') else '𝖭𝗈𝗍 𝖺𝖽𝖽𝖾𝖽'}</code>
 """
     reply_markup = InlineKeyboardMarkup([
         [InlineKeyboardButton("✦ 𝖲𝗍𝖺𝗋𝗍 𝖯𝗂𝖼", callback_data="update_photo_START_PHOTO"), InlineKeyboardButton("✦ 𝖥𝗌𝗎𝖻 𝖯𝗂𝖼", callback_data="update_photo_FSUB_PHOTO")],
         [InlineKeyboardButton("✦ 𝖠𝖻𝗈𝗎𝗍 𝖯𝗂𝖼", callback_data="update_photo_ABOUT_PHOTO"), InlineKeyboardButton("✦ 𝖲𝖾𝗍𝗍𝗂𝗇𝗀𝗌 𝖯𝗂𝖼", callback_data="update_photo_SETTINGS_PHOTO")],
+        [InlineKeyboardButton("✦ 𝖣𝖾𝗅𝖾𝗍𝖾𝖽 𝖯𝗂𝖼", callback_data="update_photo_DELETED_PHOTO")],
         [InlineKeyboardButton("✦ 𝖡𝖺𝖼𝗄", callback_data="settings_pg2")]
     ])
     await send_settings_panel(client, query, caption, reply_markup)
