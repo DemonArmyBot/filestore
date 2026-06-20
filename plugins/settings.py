@@ -1,5 +1,5 @@
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, InputMediaPhoto
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, InputMediaPhoto, Message
 from pyrogram.enums import ParseMode
 from pyrogram.errors.pyromod import ListenerTimeout
 import re
@@ -8,7 +8,11 @@ async def send_settings_panel(client, query, caption, reply_markup):
     """Utility to send or edit the settings panel with optional photo."""
     settings_photo = client.messages.get('SETTINGS_PHOTO')
 
-    message = getattr(query, 'message', query)
+    # Get the actual message object
+    if hasattr(query, 'message'):
+        message = query.message
+    else:
+        message = query
 
     try:
         if settings_photo:
@@ -51,25 +55,30 @@ async def send_settings_panel(client, query, caption, reply_markup):
             pass
 
 @Client.on_message(filters.command("settings") & filters.private)
-async def settings_cmd(client, message):
+async def settings_cmd(client, message: Message):
     if message.from_user.id not in client.admins:
         return await message.reply(client.reply_text)
+    # Pass the message directly; settings_page_1 will handle it
     await settings_page_1(client, message)
 
 @Client.on_callback_query(filters.regex("^settings$"))
-async def settings_main(client, query):
+async def settings_main(client, query: CallbackQuery):
     if query.from_user.id not in client.admins:
         return await query.answer("𝖠𝖽𝗆𝗂𝗇 𝗈𝗇𝗅𝗒!", show_alert=True)
     await settings_page_1(client, query)
 
 @Client.on_callback_query(filters.regex("^settings_pg1$"))
-async def settings_page_1_cb(client, query):
+async def settings_page_1_cb(client, query: CallbackQuery):
     if query.from_user.id not in client.admins:
         return await query.answer("𝖠𝖽𝗆𝗂𝗇 𝗈𝗇𝗅𝗒!", show_alert=True)
     await settings_page_1(client, query)
 
-async def settings_page_1(client, query):
-    await query.answer()
+async def settings_page_1(client, obj):
+    """Works with either a CallbackQuery or a Message."""
+    # If it's a callback, answer it
+    if hasattr(obj, 'answer'):
+        await obj.answer()
+    # The rest uses the object directly (both have .message or are the message itself)
     caption = """<blockquote><b>⚙️ 𝖡𝗈𝗍 𝖲𝖾𝗍𝗍𝗂𝗇𝗀𝗌 (𝖯𝖺𝗀𝖾 𝟣/𝟤)</b></blockquote>
 𝖴𝗌𝖾 𝖳𝗁𝖾 𝖡𝗎𝗍𝗍𝗈𝗇𝗌 𝖡𝖾𝗅𝗈𝗐 𝖳𝗈 𝖬𝖺𝗇𝖺𝗀𝖾 𝖳𝗁𝖾 𝖡𝗈𝗍'𝖲 𝖢𝗈𝗋𝖾 𝖥𝖾𝖺𝗍𝗎𝗋𝖾𝗌.
 """
@@ -79,13 +88,17 @@ async def settings_page_1(client, query):
         [InlineKeyboardButton("✦ 𝖠𝗎𝗍𝗈𝖻𝖺𝗍𝖼𝗁 𝖲𝖾𝗍𝗍𝗂𝗇𝗀𝗌", callback_data="autobatch_settings")],
         [InlineKeyboardButton("✦ 𝖧𝗈𝗆𝖾", callback_data="home"), InlineKeyboardButton("✦ 𝖭𝖾𝗑𝗍", callback_data="settings_pg2")]
     ])
-    await send_settings_panel(client, query, caption, reply_markup)
+    await send_settings_panel(client, obj, caption, reply_markup)
 
 @Client.on_callback_query(filters.regex("^settings_pg2$"))
-async def settings_page_2(client, query):
+async def settings_page_2(client, query: CallbackQuery):
     if query.from_user.id not in client.admins:
         return await query.answer("𝖠𝖽𝗆𝗂𝗇 𝗈𝗇𝗅𝗒!", show_alert=True)
     await query.answer()
+    await settings_page_2_content(client, query)
+
+async def settings_page_2_content(client, obj):
+    """Works with either a CallbackQuery or a Message."""
     caption = """<blockquote><b>⚙️ 𝖡𝗈𝗍 𝖲𝖾𝗍𝗍𝗂𝗇𝗀𝗌 (𝖯𝖺𝗀𝖾 𝟤/𝟤)</b></blockquote>
 𝖴𝗌𝖾 𝖳𝗁𝖾 𝖡𝗎𝗍𝗍𝗈𝗇𝗌 𝖡𝖾𝗅𝗈𝗐 𝖳𝗈 𝖬𝖺𝗇𝖺𝗀𝖾 𝖳𝗁𝖾 𝖡𝗈𝗍'𝖲 𝖢𝗈𝗋𝖾 𝖥𝖾𝖺𝗍𝗎𝗋𝖾𝗌.
 """
@@ -99,7 +112,7 @@ async def settings_page_2(client, query):
         buttons.append([InlineKeyboardButton("✦ 𝖢𝗅𝗈𝗇𝖾 𝖡𝗈𝗍", callback_data="clone_bot"), InlineKeyboardButton("✦ 𝖢𝗅𝗈𝗇𝖾 𝖫𝗂𝗌𝗍", callback_data="clone_list")])
     buttons.append([InlineKeyboardButton("✦ 𝖡𝖺𝖼𝗄", callback_data="settings_pg1"), InlineKeyboardButton("✦ 𝖧𝗈𝗆𝖾", callback_data="home")])
     reply_markup = InlineKeyboardMarkup(buttons)
-    await send_settings_panel(client, query, caption, reply_markup)
+    await send_settings_panel(client, obj, caption, reply_markup)
 
 @Client.on_callback_query(filters.regex("^photos$"))
 async def photos(client, query):
@@ -210,11 +223,11 @@ async def redirect_cb(client, query):
             filters=filters.text
         )
         if not payload_msg or not payload_msg.text:
-            return await settings_page_2(client, query)
+            return await settings_page_2_content(client, query)
 
         if payload_msg.text.lower() == "cancel":
             await payload_msg.reply("🚫 𝖠𝖼𝗍𝗂𝗈𝗇 𝖼𝖺𝗇𝼨𝖾𝗅𝗅𝖾𝖽.")
-            return await settings_page_2(client, query)
+            return await settings_page_2_content(client, query)
 
         payload = payload_msg.text.strip()
         if "start=" in payload:
@@ -227,16 +240,16 @@ async def redirect_cb(client, query):
             filters=filters.text
         )
         if not alias_msg or not alias_msg.text:
-            return await settings_page_2(client, query)
+            return await settings_page_2_content(client, query)
 
         if alias_msg.text.lower() == "cancel":
             await alias_msg.reply("🚫 𝖠𝖼𝗍𝗂𝗈𝗇 𝖼𝖺𝗇𝼨𝖾𝗅𝗅𝖾𝖽.")
-            return await settings_page_2(client, query)
+            return await settings_page_2_content(client, query)
 
         alias = alias_msg.text.strip()
         if not re.match(r'^[a-zA-Z0-9_]+$', alias):
             await alias_msg.reply("❌ <b>𝖨𝗇𝗏𝖺𝗅𝗂𝖽 𝖠𝗅𝗂𝖺𝗌.</b> 𝖴𝗌𝖾 𝗈𝗇𝗅𝗒 𝖺𝗅𝗉𝗁𝖺𝗇𝗎𝗆𝖾𝗋𝗂𝖼 𝖼𝗁𝖺𝗋𝖺𝖼𝗍𝖾𝗋𝗌 𝖺𝗇𝖽 𝗎𝗇𝖽𝖾𝗋𝗌𝖼𝗈𝗋𝖾𝗌.")
-            return await settings_page_2(client, query)
+            return await settings_page_2_content(client, query)
 
         await client.mongodb.save_alias(alias, payload)
 
@@ -252,4 +265,4 @@ async def redirect_cb(client, query):
     except ListenerTimeout:
         await client.send_message(query.from_user.id, "<b>𝖳𝗂𝗆𝖾𝗈𝗎𝗍!</b>")
 
-    await settings_page_2(client, query)
+    await settings_page_2_content(client, query)

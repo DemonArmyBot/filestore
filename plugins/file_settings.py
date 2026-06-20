@@ -18,14 +18,18 @@ async def file_settings_panel(client: Client, query: CallbackQuery):
     button_enabled = getattr(client, 'channel_button_enabled', False)
     button_name = getattr(client, 'button_name', "Not Set")
     button_url = getattr(client, 'button_url', "Not Set")
+    disable_btn_enabled = getattr(client, 'disable_btn', True)  # True means button is disabled (no button)
 
     protect_status = "𝖤𝗇𝖺𝖻𝗅𝖾𝖽 ✔" if protect_enabled else "𝖣𝗂𝗌𝖺𝖻𝗅𝖾𝖽 ✘"
     caption_status = "𝖤𝗇𝖺𝖻𝗅𝖾𝖽 ✔" if hide_caption_enabled else "𝖣𝗂𝗌𝖺𝖻𝗅𝖾𝖽 ✘"
     button_status = "𝖤𝗇𝖺𝖻𝗅𝖾𝖽 ✔" if button_enabled else "𝖣𝗂𝗌𝖺𝖻𝗅𝖾𝖽 ✘"
+    db_button_status = "✔" if disable_btn_enabled else "✘"  # show current state
+
     caption = f"""<blockquote><b>✧ 𝖥𝗂𝗅𝖾𝗌 𝖱𝖾𝗅𝖺𝗍𝖾𝖽 𝖲𝖾𝗍𝗍𝗂𝗇𝗀𝗌</b></blockquote>
 <pre><b>🔒 𝖯𝗋𝗈𝗍𝖾𝖼𝗍 𝖢𝗈𝗇𝗍𝖾𝗇𝗍: {protect_status}</b></pre>
 <pre><b>🫥 𝖧𝗂𝖽𝖾 𝖢𝖺𝗉𝗍𝗂𝗈𝗇: {caption_status}</b></pre>
 <pre><b>🔘 𝖢𝗁𝖺𝗇𝗇𝖾𝗅 𝖡𝗎𝗍𝗍𝗈𝗇: {button_status}</b></pre>
+<pre><b>📌 𝖣𝖡 𝖡𝗎𝗍𝗍𝗈𝗇 (𝗈𝗇 𝗉𝗈𝗌𝗍𝗌): {db_button_status}</b></pre>
 <blockquote><b>›› 𝖡𝗎𝗍𝗍𝗈𝗇 𝖣𝖾𝗍𝖺𝗂𝗅𝗌</b>\n
 <b>›› 𝖡𝗎𝗍𝗍𝗈𝗇 𝖭𝖺𝗆𝖾:</b> <code>{button_name}</code>
 <b>›› 𝖡𝗎𝗍𝗍𝗈𝗇 𝖫𝗂𝗇𝗄:</b> <code>{button_url}</code></blockquote>\n
@@ -34,6 +38,7 @@ async def file_settings_panel(client: Client, query: CallbackQuery):
     protect_btn_text = f"✦ 𝖯𝗋𝗈𝗍𝖾𝖼𝗍 𝖢𝗈𝗇𝗍𝖾𝗇𝗍: {'✔' if not protect_enabled else '✘'}"
     caption_btn_text = f"✦ 𝖧𝗂𝖽𝖾 𝖢𝖺𝗉𝗍𝗂𝗈𝗇: {'✔' if not hide_caption_enabled else '✘'}"
     button_btn_text = f"✦ 𝖢𝗁𝖺𝗇𝗇𝖾𝗅 𝖡𝗎𝗍𝗍𝗈𝗇: {'✔' if not button_enabled else '✘'}"
+    db_button_btn_text = f"✦ 𝖣𝖡 𝖡𝗎𝗍𝗍𝗈𝗇 𝗈𝗇 𝖯𝗈𝗌𝗍𝗌: {'✔' if disable_btn_enabled else '✘'}"
 
     qr_status = "𝖮𝖭" if client.qr_enabled else "𝖮𝖥𝖥"
     qr_btn_text = f"✦ 𝖰𝖱 𝖢𝗈𝖽𝖾: {qr_status}"
@@ -41,6 +46,7 @@ async def file_settings_panel(client: Client, query: CallbackQuery):
     reply_markup = InlineKeyboardMarkup([
         [InlineKeyboardButton(protect_btn_text, callback_data="toggle_protect"), InlineKeyboardButton(caption_btn_text, callback_data="toggle_hide_caption")],
         [InlineKeyboardButton(button_btn_text, callback_data="toggle_channel_button"), InlineKeyboardButton("✦ 𝖲𝖾𝗍 𝖡𝗎𝗍𝗍𝗈𝗇 ➪", callback_data="set_button")],
+        [InlineKeyboardButton(db_button_btn_text, callback_data="toggle_disable_btn")],  # new row
         [InlineKeyboardButton(qr_btn_text, callback_data="toggle_qr")],
         [InlineKeyboardButton("✦ 𝖡𝖺𝖼𝗄", callback_data="settings_pg2"), InlineKeyboardButton("✦ 𝖢𝗅𝗈𝗌𝖾 ✘", callback_data="close")]
     ])
@@ -103,6 +109,7 @@ async def set_button_details(client: Client, query: CallbackQuery):
     except ListenerTimeout:
         await prompt.edit("<b>𝖳𝗂𝗆𝖾𝗈𝗎𝗍! 𝖭𝗈 𝖼𝗁𝖺𝗇𝗀𝖾𝗌 𝗐𝖾𝗋𝖾 𝗆𝖺𝖽𝖾.</b>")
     await file_settings_panel(client, query)
+
 @Client.on_callback_query(filters.regex("^toggle_qr$"))
 async def toggle_qr(client: Client, query: CallbackQuery):
     if query.from_user.id not in client.admins:
@@ -110,4 +117,14 @@ async def toggle_qr(client: Client, query: CallbackQuery):
     client.qr_enabled = not client.qr_enabled
     await client.mongodb.save_bot_setting('qr_enabled', client.qr_enabled)
     await query.answer(f"𝖰𝖱 𝖢𝗈𝖽𝖾 𝗇𝗈𝗐 {'𝖤𝗇𝖺𝖻𝗅𝖾𝖽' if client.qr_enabled else '𝖣𝗂𝗌𝖺𝖻𝗅𝖾𝖽'}")
+    await file_settings_panel(client, query)
+
+@Client.on_callback_query(filters.regex("^toggle_disable_btn$"))
+async def toggle_disable_btn(client: Client, query: CallbackQuery):
+    if query.from_user.id not in client.admins:
+        return await query.answer("𝖠𝖽𝗆𝗂𝗇 𝗈𝗇𝗅𝗒!", show_alert=True)
+    # Toggle the value (disable_btn = True means no button, False means add button)
+    client.disable_btn = not getattr(client, 'disable_btn', True)
+    await client.mongodb.save_bot_setting('disable_btn', client.disable_btn)
+    await query.answer(f"𝖣𝖡 𝖡𝗎𝗍𝗍𝗈𝗇 𝗂𝗌 𝗇𝗈𝗐 {'𝖤𝗇𝖺𝖻𝗅𝖾𝖽' if client.disable_btn else '𝖣𝗂𝗌𝖺𝖻𝗅𝖾𝖽'} 𝗈𝗇 𝗉𝗈𝗌𝗍𝗌", show_alert=True)
     await file_settings_panel(client, query)
